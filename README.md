@@ -39,8 +39,9 @@ This repository contains Terraform code to provision a Kubernetes cluster with 4
 
 ## Outputs
 
-- **Kubeconfig**: Kubernetes configuration file for cluster access
-- **Cluster Endpoint**: URL to access the Kubernetes API server
+- **Cluster ID**: Cluster ID for doctl commands if necessary.
+- **Kubeconfig**: Kubernetes configuration file located in ./kubeconfig.yaml for cluster access. It is auto added to your kubeconfig file, or execute manually the doctl command in <https://cloud.digitalocean.com/kubernetes/clusters/your-k8s-cluster-id> getting started.
+- **Cluster Endpoint**: URL to access the Kubernetes API server.
 
 ## Clean Up
 
@@ -73,6 +74,16 @@ Note: In some cases, the worker droplets might not be automatically destroyed. I
     # Identify and delete the droplets
     for id in $(doctl compute droplet list --format ID --no-header); do doctl compute droplet delete $id --force; done
     ```
+
+### Using Makefile
+
+If you have make installed, you can use:
+
+```bash
+make clean
+```
+
+This will destroy the k8s cluster and **all** droplets in your digital ocean account.
 
 ## License
 
