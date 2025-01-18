@@ -42,10 +42,21 @@ resource "digitalocean_kubernetes_cluster" "k8s_cluster" {
   }
 }
 
-output "kubeconfig" {
-  description = "Kubernetes config file"
-  value       = digitalocean_kubernetes_cluster.k8s_cluster.kube_config[0].raw_config
-  sensitive   = true
+output "cluster_id" {
+  description = "Kubernetes cluster ID"
+  value       = digitalocean_kubernetes_cluster.k8s_cluster.id
+}
+
+resource "local_file" "kubeconfig" {
+  content  = digitalocean_kubernetes_cluster.k8s_cluster.kube_config[0].raw_config
+  filename = "${path.module}/kubeconfig.yaml"
+}
+
+resource "null_resource" "update_kubeconfig" {
+  provisioner "local-exec" {
+    command = "mkdir -p ~/.kube && cp ${local_file.kubeconfig.filename} ~/.kube/config"
+  }
+  depends_on = [local_file.kubeconfig]
 }
 
 output "cluster_endpoint" {
