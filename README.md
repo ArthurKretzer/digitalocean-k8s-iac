@@ -42,6 +42,38 @@ This repository contains Terraform code to provision a Kubernetes cluster with 4
 - **Kubeconfig**: Kubernetes configuration file for cluster access
 - **Cluster Endpoint**: URL to access the Kubernetes API server
 
+## Clean Up
+
+To destroy the infrastructure and avoid charges:
+
+```bash
+terraform destroy -var-file=env.tfvars
+```
+
+Note: In some cases, the worker droplets might not be automatically destroyed. If this happens, manually delete them from the DigitalOcean dashboard or use the CLI:
+
+### Install and Configure DigitalOcean CLI (doctl)
+
+1. Install `doctl`
+
+    Follow the documentation [here](https://docs.digitalocean.com/reference/doctl/how-to/install/).
+
+2. Authenticate with your API token:
+
+    ```bash
+    doctl auth init
+    ```
+
+    Follow the prompt and enter your DigitalOcean API token.
+
+3. List and delete droplets:
+
+    ```bash
+    doctl compute droplet list
+    # Identify and delete the droplets
+    for id in $(doctl compute droplet list --format ID --no-header); do doctl compute droplet delete $id --force; done
+    ```
+
 ## License
 
 This project is licensed under the Apache License v2.0.
