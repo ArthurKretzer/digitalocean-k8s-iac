@@ -1,7 +1,7 @@
 terraform {
   required_providers {
     digitalocean = {
-      source = "digitalocean/digitalocean"
+      source  = "digitalocean/digitalocean"
       version = "~> 2.0"
     }
   }
@@ -32,7 +32,7 @@ variable "node_size" {
 resource "digitalocean_kubernetes_cluster" "k8s_cluster" {
   name    = "k8s-cluster"
   region  = var.region
-  version = "1.31.1-do.5"
+  version = "1.32.2-do.0"
 
   node_pool {
     name       = "worker-pool"

@@ -27,6 +27,20 @@ This repository contains Terraform code to provision a Kubernetes cluster with 4
     node_size = "s-2vcpu-2gb"
     ```
 
+3. Configure kubernetes version
+
+    Identify kubernetes version on DigitalOcean UI and apply it to code.
+
+    ![kubernetes_version](docs/imgs/version.png)
+
+    ```terraform
+    resource "digitalocean_kubernetes_cluster" "k8s_cluster" {
+        name    = "k8s-cluster"
+        region  = var.region
+        version = "1.32.2-do.0"
+    ...
+    ```
+
 3. Use Terraform
 
     Create the cluster by initializing, planning and applying terraform.
