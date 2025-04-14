@@ -99,6 +99,8 @@ make clean
 
 This will destroy the k8s cluster and **all** droplets in your digital ocean account.
 
+This will also destroy **all** your pvcs.
+
 ## License
 
 This project is licensed under the Apache License v2.0.

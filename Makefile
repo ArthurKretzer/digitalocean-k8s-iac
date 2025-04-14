@@ -12,11 +12,12 @@ clean:
 		echo "Deleting droplet $$id"; \
 		doctl compute droplet delete $$id --force; \
 	done
-
+	doctl compute volume list --format ID,Name | grep pvc- | awk '{print $1}' | xargs -n 1 doctl compute volume delete -f
+	
 # Command to get the cluster ID
 CLUSTER_ID := $(shell doctl kubernetes cluster list --format Name,ID | grep k8s-cluster | awk '{print $$2}')
 
 save-kubeconfig:
 	@echo "Saving kubeconfig for cluster ID $(CLUSTER_ID)..."
-	doctl kubernetes cluster kubeconfig save $(CLUSTER_ID)
+	@doctl kubernetes cluster kubeconfig save $(CLUSTER_ID)
 	@echo "Kubeconfig saved."
