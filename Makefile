@@ -19,5 +19,6 @@ CLUSTER_ID := $(shell doctl kubernetes cluster list --format Name,ID | grep k8s-
 
 save-kubeconfig:
 	@echo "Saving kubeconfig for cluster ID $(CLUSTER_ID)..."
-	@doctl kubernetes cluster kubeconfig save $(CLUSTER_ID)
+	@doctl kubernetes cluster kubeconfig save --set-current-context=false --alias master-cluster $(CLUSTER_ID)
 	@echo "Kubeconfig saved."
+	@kubectx master-cluster
