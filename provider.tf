@@ -37,7 +37,7 @@ resource "digitalocean_kubernetes_cluster" "k8s_cluster" {
   node_pool {
     name       = "worker-pool"
     size       = var.node_size
-    node_count = 4
+    node_count = 3
     auto_scale = false
   }
 }
